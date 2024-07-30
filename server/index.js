@@ -33,7 +33,6 @@ app.post("/api/addResume", async (req, res) => {
 app.get("/api/getResumes", async (req, res) => {
   const email = req.query.email;
   const userResumes = await Resume.find({ email });
-  console.log(userResumes);
 
   res.json({ resumes: userResumes });
   res.status(200);

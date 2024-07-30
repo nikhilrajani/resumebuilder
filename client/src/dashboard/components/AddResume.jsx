@@ -13,12 +13,14 @@ import { Button } from "@/components/ui/button";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const AddResume = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
+  const navigator = useNavigate();
 
   const onCreate = async () => {
     setLoading(true);
@@ -33,6 +35,7 @@ const AddResume = () => {
 
     if (response.data) {
       console.log(response.data);
+      navigator("/dashboard/resume/" + resumeId + "/edit");
     }
 
     setOpenDialog(false);
