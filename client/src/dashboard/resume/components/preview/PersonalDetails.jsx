@@ -2,7 +2,7 @@ import React from "react";
 
 const PersonalDetails = ({ resumeInfo }) => {
   return (
-    <div>
+    <div className="pb-3">
       <h2 className="font-bold text-lg text-center uppercase">
         {resumeInfo?.firstName} {resumeInfo?.middleName} {resumeInfo?.lastName}{" "}
         | {resumeInfo?.rollNo}
