@@ -101,6 +101,6 @@ export default {
         "•Selected as one of the 5 Events Heads of Shaurya 2023, the Sports Fest of Indian Institute of Technology, Kharagpur\n•Currently leading the Events team which is responsible for planning, organising and executing 10+ events of the fest",
     },
   ],
-  extraCurriculur:
+  extraCurricular:
     "•Successfully led Team Dragons into the finals of OpenIIT Table Tennis Tournament 2023 and bagged the Silver Medal\n•Captain of the Bronze Medal winning team in the Inter School Table Tennis State Championship in 2016 anf 2018\n•Participated in the Indian Nation Cube Championship 2017 & 2018, securing a place in top 100 and top 80, resp.\n•Won the Bronze Medal in the 2x2 Event at Dugesha Open 2017 with a 4.13s avg and awared as the Best All-Rounder",
 };

@@ -1,5 +1,5 @@
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PersonalDetails from "./preview/PersonalDetails";
 import EducationDetails from "./preview/EducationDetails";
 import InternshipDetails from "./preview/InternshipDetails";
@@ -9,7 +9,7 @@ import AwardsDetails from "./preview/AwardsDetails";
 import SkillsDetails from "./preview/SkillsDetails";
 import PORDetails from "./preview/PORDetails";
 import CourseworkDetails from "./preview/CourseworkDetails";
-import ExtraCurriculurDetails from "./preview/ExtraCurriculurDetails";
+import ExtraCurricularDetails from "./preview/ExtraCurricularDetails";
 
 const PreviewSection = () => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
@@ -35,7 +35,7 @@ const PreviewSection = () => {
       {/* POR */}
       <PORDetails resumeInfo={resumeInfo} />
       {/* Extra Curricular */}
-      <ExtraCurriculurDetails resumeInfo={resumeInfo} />
+      <ExtraCurricularDetails resumeInfo={resumeInfo} />
     </div>
   );
 };

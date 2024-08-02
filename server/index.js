@@ -20,10 +20,22 @@ app.get("/api", (req, res) => {
 
 app.post("/api/addResume", async (req, res) => {
   const { resumeId, title, email } = req.body;
+  const firstEducation = {
+    id: 1,
+    institute: "IIT Kharagpur",
+    graduationYear: "",
+    currentlyStudying: false,
+    degree: "",
+    major: "",
+    performance: "",
+  };
+  const education = [];
+  education.push(firstEducation);
   await Resume.create({
     resumeId,
     title,
     email,
+    education,
   });
 
   res.json({ message: "Resume Added!" });
@@ -35,6 +47,24 @@ app.get("/api/getResumes", async (req, res) => {
   const userResumes = await Resume.find({ email });
 
   res.json({ resumes: userResumes });
+  res.status(200);
+});
+
+app.get("/api/getResume", async (req, res) => {
+  const resumeId = req.query.resumeId;
+  const resumesFound = await Resume.find({ resumeId });
+  const resumeFound = resumesFound[0];
+
+  res.json({ resume: resumeFound });
+  res.status(200);
+});
+
+app.put("/api/saveResume", async (req, res) => {
+  const { resume } = req.body;
+
+  await Resume.replaceOne({ resumeId: resume.resumeId }, resume);
+
+  res.json({ message: "Resume Updated!" });
   res.status(200);
 });
 

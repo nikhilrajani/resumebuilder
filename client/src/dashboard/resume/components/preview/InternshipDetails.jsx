@@ -7,9 +7,10 @@ const InternshipDetails = ({ resumeInfo }) => {
     <div className="mt-1">
       <SectionHeader title={"Internships"} />
       <div className="flex flex-col gap-2">
-        {resumeInfo?.internships.map((internship, index) => (
-          <InternshipCard internship={internship} key={index} />
-        ))}
+        {resumeInfo.internships &&
+          resumeInfo?.internships.map((internship, index) => (
+            <InternshipCard internship={internship} key={index} />
+          ))}
       </div>
     </div>
   );

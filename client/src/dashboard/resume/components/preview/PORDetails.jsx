@@ -7,9 +7,10 @@ const PORDetails = ({ resumeInfo }) => {
     <div className="mt-1">
       <SectionHeader title={"Positions of Responsibility"} />
       <div className="flex flex-col gap-2">
-        {resumeInfo.por.map((post, index) => (
-          <PORCard post={post} key={index} />
-        ))}
+        {resumeInfo.por &&
+          resumeInfo.por.map((post, index) => (
+            <PORCard post={post} key={index} />
+          ))}
       </div>
     </div>
   );

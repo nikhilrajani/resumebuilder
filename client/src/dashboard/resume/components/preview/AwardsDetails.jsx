@@ -6,9 +6,10 @@ const AwardsDetails = ({ resumeInfo }) => {
     <div className="mt-1">
       <SectionHeader title={"Awards and Achievements"} />
       <div className="text-md">
-        {resumeInfo.awards.split("\n").map((line, index) => (
-          <p key={index}>{line}</p>
-        ))}
+        {resumeInfo.awards &&
+          resumeInfo.awards
+            .split("\n")
+            .map((line, index) => <p key={index}>{line}</p>)}
       </div>
     </div>
   );

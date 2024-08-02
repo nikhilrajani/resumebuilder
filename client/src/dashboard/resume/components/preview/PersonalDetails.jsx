@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const PersonalDetails = ({ resumeInfo }) => {
   return (
@@ -11,7 +11,8 @@ const PersonalDetails = ({ resumeInfo }) => {
         {resumeInfo?.education[0].major}
       </h2>
       <p className="text-center text-md">
-        {resumeInfo?.phone} {resumeInfo?.email} {resumeInfo?.linkedin}{" "}
+        {resumeInfo?.phone} | {resumeInfo?.email} | {resumeInfo?.linkedin}
+        {" | "}
         {resumeInfo?.github}
       </p>
     </div>

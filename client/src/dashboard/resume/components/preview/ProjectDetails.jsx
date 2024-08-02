@@ -7,9 +7,10 @@ const ProjectDetails = ({ resumeInfo }) => {
     <div className="mt-1">
       <SectionHeader title={"Projects"} />
       <div className="flex flex-col gap-2">
-        {resumeInfo?.projects.map((project, index) => (
-          <ProjectCard project={project} key={index} />
-        ))}
+        {resumeInfo.projects &&
+          resumeInfo?.projects.map((project, index) => (
+            <ProjectCard project={project} key={index} />
+          ))}
       </div>
     </div>
   );
