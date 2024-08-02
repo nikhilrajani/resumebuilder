@@ -73,7 +73,7 @@ const resumeSchema = new mongoose.Schema({
       },
     },
   ],
-  internship: [
+  internships: [
     {
       id: {
         type: String,

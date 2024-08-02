@@ -165,6 +165,7 @@ const EducationDetailsForm = ({ enableNext }) => {
                       <Input
                         name="institute"
                         required
+                        disabled={index === 0}
                         placeholder="Ex. IIT Kharagpur"
                         onChange={(e) => handleInputChange(index, e)}
                         defaultValue={
@@ -256,117 +257,6 @@ const EducationDetailsForm = ({ enableNext }) => {
       <div className="flex justify-end">
         <Button onClick={onSave}>Save</Button>
       </div>
-      {/* <form onSubmit={onHandleSubmit}>
-        <div className="grid grid-cols-3 mt-5 mb-10 gap-3">
-          <div>
-            <label className="text-sm">First Name*</label>
-            <Input
-              name="firstName"
-              required
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.firstName}
-            />
-          </div>
-          <div>
-            <label className="text-sm">Middle Name</label>
-            <Input
-              name="middleName"
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.middleName}
-            />
-          </div>
-          <div>
-            <label className="text-sm">Last Name*</label>
-            <Input
-              name="lastName"
-              required
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.lastName}
-            />
-          </div>
-          <div>
-            <label className="text-sm">Phone</label>
-            <Input
-              name="phone"
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.phone}
-            />
-          </div>
-          <div>
-            <label className="text-sm">LinkedIn Profile</label>
-            <Input
-              name="linkedin"
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.linkedin}
-            />
-          </div>
-          <div>
-            <label className="text-sm">Github Profile</label>
-            <Input
-              name="github"
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.github}
-            />
-          </div>
-        </div>
-        <h2 className="font-bold text-lg">IIT Kharagpur Details</h2>
-        <p>Enter your details at IIT Kharagpur</p>
-        <div className="grid grid-cols-3 my-5 gap-3">
-          <div>
-            <label className="text-sm">Degree*</label>
-            <Input
-              name="degree"
-              placeholder="Ex. B.Tech"
-              required
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.education[0].degree}
-            />
-          </div>
-          <div>
-            <label className="text-sm">Roll No*</label>
-            <Input
-              name="rollNo"
-              placeholder="20XX100XX"
-              required
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.rollNo}
-            />
-          </div>
-          <div>
-            <label className="text-sm">Performance*</label>
-            <Input
-              name="performance"
-              placeholder="Ex. 8.5/10"
-              required
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.education[0].performance}
-            />
-          </div>
-          <div>
-            <label className="text-sm">Year of Graduation*</label>
-            <Input
-              name="graduationYear"
-              placeholder="Ex. 2025"
-              required
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.education[0].graduationYear}
-            />
-          </div>
-          <div className="col-span-2">
-            <label className="text-sm">Course*</label>
-            <Input
-              name="major"
-              placeholder="Ex. Electrical Engineering"
-              required
-              onChange={handleInputChange}
-              defaultValue={resumeInfo.education[0].major}
-            />
-          </div>
-        </div>
-        <div className="flex justify-end">
-          <Button type="Submit">Save</Button>
-        </div>
-      </form> */}
     </div>
   );
 };
