@@ -18,31 +18,31 @@ import axios from "axios";
 import { Switch } from "@/components/ui/switch";
 import RichTextEditor from "./components/RichTechEditor";
 
-const InternshipDetailsForm = ({ enableNext }) => {
+const ProjectDetailsForm = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  const [editInternship, setEditInternship] = useState(-1);
+  const [editProject, setEditProject] = useState(-1);
   const [dragItem, setDragItem] = useState(-1);
   const [dragOverItem, setDragOverItem] = useState(-1);
 
   useEffect(() => {
-    if (resumeInfo.internships.length === 0) {
-      addInternship();
+    if (resumeInfo.projects.length === 0) {
+      addProject();
     }
-  }, []);
+  }, [resumeInfo]);
 
   const handleDragAndDrop = () => {
-    let internshipsListCopy = [...resumeInfo.internships];
-    const draggedItem = internshipsListCopy.splice(dragItem, 1)[0];
+    let projectsListCopy = [...resumeInfo.projects];
+    const draggedItem = projectsListCopy.splice(dragItem, 1)[0];
 
-    internshipsListCopy.splice(dragOverItem, 0, draggedItem);
+    projectsListCopy.splice(dragOverItem, 0, draggedItem);
 
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.projects = projectsListCopy;
     setResumeInfo(updatedResume);
 
-    if (dragItem === editInternship) {
+    if (dragItem === editProject) {
       setEditEducation(dragOverItem);
-    } else if (dragOverItem === editInternship) {
+    } else if (dragOverItem === editProject) {
       setEditEducation(dragItem);
     }
     setDragItem(-1);
@@ -65,73 +65,69 @@ const InternshipDetailsForm = ({ enableNext }) => {
   const handleInputChange = (index, e) => {
     enableNext(false);
     const { name, value } = e.target;
-    const internshipsListCopy = [...resumeInfo.internships];
-    internshipsListCopy[index] = {
-      ...internshipsListCopy[index],
+    const projectsListCopy = [...resumeInfo.projects];
+    projectsListCopy[index] = {
+      ...projectsListCopy[index],
       [name]: value,
     };
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.projects = projectsListCopy;
     setResumeInfo(updatedResume);
   };
 
-  const addInternship = () => {
-    const newInternship = {
-      id: resumeInfo.internships.length + 1,
-      role: "",
-      companyName: "",
-      workplace: "",
+  const addProject = () => {
+    const newProject = {
+      id: resumeInfo.projects.length + 1,
+      title: "",
+      guidance: "",
       startDate: "",
       endDate: "",
       currentlyWorking: false,
-      workSummary: "",
+      projectSummary: "",
     };
 
-    const internshipsListCopy = [...resumeInfo.internships, newInternship];
-    setEditInternship(resumeInfo.internships.length);
+    const projectsListCopy = [...resumeInfo.projects, newProject];
+    setEditProject(resumeInfo.projects.length);
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.projects = projectsListCopy;
     setResumeInfo(updatedResume);
   };
 
-  const deleteInternship = (index) => {
-    const internshipsListCopy = [...resumeInfo.internships];
-    internshipsListCopy.splice(index, 1);
+  const deleteProject = (index) => {
+    const projectsListCopy = [...resumeInfo.projects];
+    projectsListCopy.splice(index, 1);
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.projects = projectsListCopy;
     setResumeInfo(updatedResume);
   };
 
   const handleSwitchToggle = (index) => {
     enableNext(false);
-    const newValue = resumeInfo.internships[index].currentlyWorking
-      ? false
-      : true;
-    console.log(newValue);
-    const internshipsListCopy = [...resumeInfo.internships];
-    internshipsListCopy[index].currentlyWorking = newValue;
+    const newValue = resumeInfo.projects[index].currentlyWorking ? false : true;
+    const projectsListCopy = [...resumeInfo.projects];
+    projectsListCopy[index].currentlyWorking = newValue;
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.projects = projectsListCopy;
     setResumeInfo(updatedResume);
-    console.log(resumeInfo.internships[index]);
   };
 
   const onSummaryChange = (index, value) => {
     enableNext(false);
-    const internshipsListCopy = [...resumeInfo.internships];
-    internshipsListCopy[index].workSummary = value;
+    const projectsListCopy = [...resumeInfo.projects];
+    projectsListCopy[index].projectSummary = value;
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.projects = projectsListCopy;
     setResumeInfo(updatedResume);
   };
 
   return (
     <div className="p-5 shadow-md rounded-lg border-t-primary border-t-4 mt-10">
-      <h2 className="font-bold text-lg">Internships Details</h2>
-      <p>Tell us about your previous experiences</p>
-      {resumeInfo.internships &&
-        resumeInfo.internships.map((internship, index) => {
-          const isEditing = editInternship === index;
+      <h2 className="font-bold text-lg">Project Details</h2>
+      <p>Add your previous works</p>
+
+      {resumeInfo.projects &&
+        resumeInfo.projects.map((project, index) => {
+          const isEditing = editProject === index;
           return (
             <div
               key={index}
@@ -145,14 +141,14 @@ const InternshipDetailsForm = ({ enableNext }) => {
               <div className="flex justify-between">
                 <div
                   className="flex flex-row gap-1 cursor-pointer w-full"
-                  onClick={() => setEditInternship(isEditing ? -1 : index)}
+                  onClick={() => setEditProject(isEditing ? -1 : index)}
                 >
                   <div className="flex items-center justify-center cursor-move">
                     <GripVertical className="opacity-30" />
                   </div>
 
                   <div className="font-semibold text-lg">
-                    {internship.role} | {internship.companyName}
+                    {project.title} | {project.guidance}
                   </div>
                 </div>
                 <AlertDialog>
@@ -166,12 +162,12 @@ const InternshipDetailsForm = ({ enableNext }) => {
                       <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                     </AlertDialogHeader>
                     <AlertDialogDescription>
-                      This will remove the internship from the list
+                      This will remove the project from the list
                     </AlertDialogDescription>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <AlertDialogAction className="bg-red-500 hover:bg-red-800">
-                        <button onClick={() => deleteInternship(index)}>
+                        <button onClick={() => deleteProject(index)}>
                           Delete
                         </button>
                       </AlertDialogAction>
@@ -188,47 +184,33 @@ const InternshipDetailsForm = ({ enableNext }) => {
                   <form>
                     <div className="grid grid-cols-3 mt-5 mb-10 gap-3">
                       <div>
-                        <label className="text-sm font-semibold">Role</label>
+                        <label className="text-sm font-semibold">
+                          Project Title
+                        </label>
                         <Input
-                          name="role"
+                          name="title"
                           required
-                          placeholder="Ex. Software Developer"
+                          placeholder="Ex. E-Commerce Website"
                           onChange={(e) => handleInputChange(index, e)}
                           defaultValue={
                             isEditing
-                              ? resumeInfo.internships[editInternship].role
+                              ? resumeInfo.projects[editProject].title
                               : ""
                           }
                         />
                       </div>
-                      <div>
+                      <div className="col-span-2">
                         <label className="text-sm font-semibold">
-                          Company Name
+                          Guidance
                         </label>
                         <Input
-                          name="companyName"
+                          name="guidance"
                           required
-                          placeholder="Ex. Google"
+                          placeholder="Ex. Term Project"
                           onChange={(e) => handleInputChange(index, e)}
                           defaultValue={
                             isEditing
-                              ? resumeInfo.internships[editInternship]
-                                  .companyName
-                              : ""
-                          }
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-semibold">
-                          Work Place
-                        </label>
-                        <Input
-                          name="workplace"
-                          placeholder="Ex. Bangalore or Remote"
-                          onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
-                            isEditing
-                              ? resumeInfo.internships[editInternship].workplace
+                              ? resumeInfo.projects[editProject].guidance
                               : ""
                           }
                         />
@@ -244,7 +226,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           onChange={(e) => handleInputChange(index, e)}
                           defaultValue={
                             isEditing
-                              ? resumeInfo.internships[editInternship].startDate
+                              ? resumeInfo.projects[editProject].startDate
                               : ""
                           }
                         />
@@ -259,7 +241,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           onChange={(e) => handleInputChange(index, e)}
                           defaultValue={
                             isEditing
-                              ? resumeInfo.internships[editInternship].endDate
+                              ? resumeInfo.projects[editProject].endDate
                               : ""
                           }
                         />
@@ -268,7 +250,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                         <Switch
                           checked={
                             isEditing
-                              ? resumeInfo.internships[editInternship]
+                              ? resumeInfo.projects[editProject]
                                   .currentlyWorking
                                 ? true
                                 : false
@@ -287,8 +269,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           index={index}
                           defaultValue={
                             isEditing
-                              ? resumeInfo.internships[editInternship]
-                                  .workSummary
+                              ? resumeInfo.projects[editProject].projectSummary
                               : ""
                           }
                         />
@@ -305,7 +286,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
         <Button
           variant="outline"
           className="text-primary font-bold text-xl"
-          onClick={addInternship}
+          onClick={addProject}
         >
           +
         </Button>
@@ -317,4 +298,4 @@ const InternshipDetailsForm = ({ enableNext }) => {
   );
 };
 
-export default InternshipDetailsForm;
+export default ProjectDetailsForm;

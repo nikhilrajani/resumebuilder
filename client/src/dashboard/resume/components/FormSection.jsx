@@ -4,9 +4,10 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EducationDetailsForm from "./forms/EducationDetailsForm";
 import InternshipDetailsForm from "./forms/InternshipDetailsForm";
+import ProjectDetailsForm from "./forms/ProjectDetailsForm";
 
 const FormSection = () => {
-  const [formIndex, setFormIndex] = useState(2);
+  const [formIndex, setFormIndex] = useState(0);
   const [enableNext, setEnableNext] = useState(true);
   return (
     <div>
@@ -40,6 +41,10 @@ const FormSection = () => {
       {/* Internship Details */}
       {formIndex === 2 && (
         <InternshipDetailsForm enableNext={(v) => setEnableNext(v)} />
+      )}
+
+      {formIndex === 3 && (
+        <ProjectDetailsForm enableNext={(v) => setEnableNext(v)} />
       )}
     </div>
   );

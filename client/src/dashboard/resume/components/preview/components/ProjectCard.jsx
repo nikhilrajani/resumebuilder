@@ -13,9 +13,11 @@ const ProjectCard = ({ project }) => {
         </div>
       </div>
       <div className="text-md">
-        {project.projectSummary.split("\n").map((line, index) => (
-          <p key={index}>{line}</p>
-        ))}
+        <div
+          dangerouslySetInnerHTML={{ __html: project.projectSummary }}
+          className="rsw-ce ul"
+          style={{ paddingLeft: "0px", paddingTop: "0px" }}
+        />
       </div>
     </div>
   );
