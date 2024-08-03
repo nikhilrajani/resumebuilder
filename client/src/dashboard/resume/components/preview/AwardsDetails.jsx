@@ -3,13 +3,14 @@ import SectionHeader from "./components/SectionHeader";
 
 const AwardsDetails = ({ resumeInfo }) => {
   return (
-    <div className="mt-1">
+    <div className="mt-[-5px]">
       <SectionHeader title={"Awards and Achievements"} />
       <div className="text-md">
-        {resumeInfo.awards &&
-          resumeInfo.awards
-            .split("\n")
-            .map((line, index) => <p key={index}>{line}</p>)}
+        <div
+          dangerouslySetInnerHTML={{ __html: resumeInfo.awards }}
+          className="rsw-ce ul"
+          style={{ paddingLeft: "0px", paddingTop: "0px" }}
+        />
       </div>
     </div>
   );

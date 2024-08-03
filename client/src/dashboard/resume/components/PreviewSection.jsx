@@ -15,7 +15,7 @@ const PreviewSection = () => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
   return (
-    <div className="shadow-lg h-full p-7 border-t-[5px]">
+    <div>
       {/* Personal Details */}
       <PersonalDetails resumeInfo={resumeInfo} />
       {/* Education */}

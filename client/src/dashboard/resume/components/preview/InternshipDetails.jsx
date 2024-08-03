@@ -4,13 +4,17 @@ import InternshipCard from "./components/InternshipCard";
 
 const InternshipDetails = ({ resumeInfo }) => {
   return (
-    <div className="mt-1">
+    <div>
       <SectionHeader title={"Internships"} />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col">
         {resumeInfo.internships &&
-          resumeInfo?.internships.map((internship, index) => (
-            <InternshipCard internship={internship} key={index} />
-          ))}
+          resumeInfo?.internships.map((internship, index) => {
+            return (
+              <div>
+                <InternshipCard internship={internship} key={index} />
+              </div>
+            );
+          })}
       </div>
     </div>
   );

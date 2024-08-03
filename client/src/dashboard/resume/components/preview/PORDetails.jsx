@@ -4,7 +4,7 @@ import PORCard from "./components/PORCard";
 
 const PORDetails = ({ resumeInfo }) => {
   return (
-    <div className="mt-1">
+    <div className="mt-[-5px]">
       <SectionHeader title={"Positions of Responsibility"} />
       <div className="flex flex-col gap-2">
         {resumeInfo.por &&

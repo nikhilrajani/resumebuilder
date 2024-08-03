@@ -40,9 +40,13 @@ const EditResume = () => {
         <p>Loading...</p>
       ) : (
         <ResumeInfoContext.Provider value={{ resumeInfo, setResumeInfo }}>
-          <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-10">
-            <FormSection />
-            <PreviewSection />
+          <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-10 h-screen">
+            <div className="h-full w-full md:w-auto">
+              <FormSection />
+            </div>
+            <div className="overflow-y-auto shadow-lg h-full p-7 border-t-[5px]">
+              <PreviewSection />
+            </div>
           </div>
         </ResumeInfoContext.Provider>
       )}

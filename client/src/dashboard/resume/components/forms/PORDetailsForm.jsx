@@ -18,31 +18,31 @@ import axios from "axios";
 import { Switch } from "@/components/ui/switch";
 import RichTextEditor from "./components/RichTechEditor";
 
-const InternshipDetailsForm = ({ enableNext }) => {
+const PORDetailsForm = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  const [editInternship, setEditInternship] = useState(-1);
+  const [editPOR, setEditPOR] = useState(-1);
   const [dragItem, setDragItem] = useState(-1);
   const [dragOverItem, setDragOverItem] = useState(-1);
 
   useEffect(() => {
-    if (resumeInfo.internships.length === 0) {
-      addInternship();
+    if (resumeInfo.por.length === 0) {
+      addPOR();
     }
   }, []);
 
   const handleDragAndDrop = () => {
-    let internshipsListCopy = [...resumeInfo.internships];
-    const draggedItem = internshipsListCopy.splice(dragItem, 1)[0];
+    let porListCopy = [...resumeInfo.por];
+    const draggedItem = porListCopy.splice(dragItem, 1)[0];
 
-    internshipsListCopy.splice(dragOverItem, 0, draggedItem);
+    porListCopy.splice(dragOverItem, 0, draggedItem);
 
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.por = porListCopy;
     setResumeInfo(updatedResume);
 
-    if (dragItem === editInternship) {
+    if (dragItem === editPOR) {
       setEditEducation(dragOverItem);
-    } else if (dragOverItem === editInternship) {
+    } else if (dragOverItem === editPOR) {
       setEditEducation(dragItem);
     }
     setDragItem(-1);
@@ -65,71 +65,67 @@ const InternshipDetailsForm = ({ enableNext }) => {
   const handleInputChange = (index, e) => {
     enableNext(false);
     const { name, value } = e.target;
-    const internshipsListCopy = [...resumeInfo.internships];
-    internshipsListCopy[index] = {
-      ...internshipsListCopy[index],
+    const porListCopy = [...resumeInfo.por];
+    porListCopy[index] = {
+      ...porListCopy[index],
       [name]: value,
     };
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.por = porListCopy;
     setResumeInfo(updatedResume);
   };
 
-  const addInternship = () => {
-    const newInternship = {
+  const addPOR = () => {
+    const newPOR = {
       id: resumeInfo.internships.length + 1,
-      role: "",
-      companyName: "",
-      workplace: "",
+      position: "",
       startDate: "",
       endDate: "",
-      currentlyWorking: false,
+      currentlyHolding: false,
       workSummary: "",
     };
 
-    const internshipsListCopy = [...resumeInfo.internships, newInternship];
-    setEditInternship(resumeInfo.internships.length);
+    const porListCopy = [...resumeInfo.por, newPOR];
+    setEditPOR(resumeInfo.por.length);
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.por = porListCopy;
     setResumeInfo(updatedResume);
   };
 
-  const deleteInternship = (index) => {
-    const internshipsListCopy = [...resumeInfo.internships];
-    internshipsListCopy.splice(index, 1);
+  const deletePOR = (index) => {
+    const porListCopy = [...resumeInfo.por];
+    porListCopyistCopy.splice(index, 1);
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.por = porListCopy;
     setResumeInfo(updatedResume);
   };
 
   const handleSwitchToggle = (index) => {
     enableNext(false);
-    const newValue = resumeInfo.internships[index].currentlyWorking
-      ? false
-      : true;
-    const internshipsListCopy = [...resumeInfo.internships];
-    internshipsListCopy[index].currentlyWorking = newValue;
+    const newValue = resumeInfo.por[index].currentlyHolding ? false : true;
+    const porListCopy = [...resumeInfo.por];
+    porListCopy[index].currentlyHolding = newValue;
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.por = porListCopy;
     setResumeInfo(updatedResume);
   };
 
   const onSummaryChange = (index, value) => {
     enableNext(false);
-    const internshipsListCopy = [...resumeInfo.internships];
-    internshipsListCopy[index].workSummary = value;
+    const porListCopy = [...resumeInfo.por];
+    porListCopy[index].workSummary = value;
     const updatedResume = { ...resumeInfo };
-    updatedResume.internships = internshipsListCopy;
+    updatedResume.por = porListCopy;
     setResumeInfo(updatedResume);
   };
 
   return (
     <div className="p-5 shadow-md rounded-lg border-t-primary border-t-4 mt-10">
-      <h2 className="font-bold text-lg">Internships Details</h2>
-      <p>Tell us about your previous experiences</p>
-      {resumeInfo.internships &&
-        resumeInfo.internships.map((internship, index) => {
-          const isEditing = editInternship === index;
+      <h2 className="font-bold text-lg">Positions of Responsibility</h2>
+      <p>Tell us about your involvements</p>
+      {resumeInfo.por &&
+        resumeInfo.por.map((post, index) => {
+          const isEditing = editPOR === index;
           return (
             <div
               key={index}
@@ -143,15 +139,13 @@ const InternshipDetailsForm = ({ enableNext }) => {
               <div className="flex justify-between">
                 <div
                   className="flex flex-row gap-1 cursor-pointer w-full"
-                  onClick={() => setEditInternship(isEditing ? -1 : index)}
+                  onClick={() => setEditPOR(isEditing ? -1 : index)}
                 >
                   <div className="flex items-center justify-center cursor-move">
                     <GripVertical className="opacity-30" />
                   </div>
 
-                  <div className="font-semibold text-lg">
-                    {internship.role} | {internship.companyName}
-                  </div>
+                  <div className="font-semibold text-lg">{post.position}</div>
                 </div>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -164,14 +158,12 @@ const InternshipDetailsForm = ({ enableNext }) => {
                       <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                     </AlertDialogHeader>
                     <AlertDialogDescription>
-                      This will remove the internship from the list
+                      This will remove the POR from the list
                     </AlertDialogDescription>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <AlertDialogAction className="bg-red-500 hover:bg-red-800">
-                        <button onClick={() => deleteInternship(index)}>
-                          Delete
-                        </button>
+                        <button onClick={() => deletePOR(index)}>Delete</button>
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
@@ -186,48 +178,16 @@ const InternshipDetailsForm = ({ enableNext }) => {
                   <form>
                     <div className="grid grid-cols-3 mt-5 mb-10 gap-3">
                       <div>
-                        <label className="text-sm font-semibold">Role</label>
-                        <Input
-                          name="role"
-                          required
-                          placeholder="Ex. Software Developer"
-                          onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
-                            isEditing
-                              ? resumeInfo.internships[editInternship].role
-                              : ""
-                          }
-                        />
-                      </div>
-                      <div>
                         <label className="text-sm font-semibold">
-                          Company Name
+                          Position
                         </label>
                         <Input
-                          name="companyName"
+                          name="position"
                           required
-                          placeholder="Ex. Google"
+                          placeholder="Ex. General Secretary"
                           onChange={(e) => handleInputChange(index, e)}
                           defaultValue={
-                            isEditing
-                              ? resumeInfo.internships[editInternship]
-                                  .companyName
-                              : ""
-                          }
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-semibold">
-                          Work Place
-                        </label>
-                        <Input
-                          name="workplace"
-                          placeholder="Ex. Bangalore or Remote"
-                          onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
-                            isEditing
-                              ? resumeInfo.internships[editInternship].workplace
-                              : ""
+                            isEditing ? resumeInfo.por[editPOR].position : ""
                           }
                         />
                       </div>
@@ -241,9 +201,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           placeholder="Ex. May 2024"
                           onChange={(e) => handleInputChange(index, e)}
                           defaultValue={
-                            isEditing
-                              ? resumeInfo.internships[editInternship].startDate
-                              : ""
+                            isEditing ? resumeInfo.por[editPOR].startDate : ""
                           }
                         />
                       </div>
@@ -256,9 +214,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           placeholder="Ex. Jun. 2024"
                           onChange={(e) => handleInputChange(index, e)}
                           defaultValue={
-                            isEditing
-                              ? resumeInfo.internships[editInternship].endDate
-                              : ""
+                            isEditing ? resumeInfo.por[editPOR].endDate : ""
                           }
                         />
                       </div>
@@ -266,17 +222,16 @@ const InternshipDetailsForm = ({ enableNext }) => {
                         <Switch
                           checked={
                             isEditing
-                              ? resumeInfo.internships[editInternship]
-                                  .currentlyWorking
+                              ? resumeInfo.por[editPOR].currentlyHolding
                                 ? true
                                 : false
                               : false
                           }
-                          id="currentlyWorking"
+                          id="currentlyHolding"
                           onClick={() => handleSwitchToggle(index)}
                         />
                         <label className="text-md font-semibold">
-                          Currently Working
+                          Currently Holding
                         </label>
                       </div>
                       <div className="col-span-3 mt-2">
@@ -284,10 +239,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           onRichTextEditorChange={onSummaryChange}
                           index={index}
                           defaultValue={
-                            isEditing
-                              ? resumeInfo.internships[editInternship]
-                                  .workSummary
-                              : ""
+                            isEditing ? resumeInfo.por[editPOR].workSummary : ""
                           }
                         />
                       </div>
@@ -303,7 +255,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
         <Button
           variant="outline"
           className="text-primary font-bold text-xl"
-          onClick={addInternship}
+          onClick={addPOR}
         >
           +
         </Button>
@@ -315,4 +267,4 @@ const InternshipDetailsForm = ({ enableNext }) => {
   );
 };
 
-export default InternshipDetailsForm;
+export default PORDetailsForm;

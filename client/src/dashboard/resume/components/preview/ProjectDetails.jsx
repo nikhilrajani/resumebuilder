@@ -4,7 +4,7 @@ import ProjectCard from "./components/ProjectCard";
 
 const ProjectDetails = ({ resumeInfo }) => {
   return (
-    <div className="mt-1">
+    <div className="mt-[-5px]">
       <SectionHeader title={"Projects"} />
       <div className="flex flex-col gap-2">
         {resumeInfo.projects &&

@@ -11,9 +11,11 @@ const PORCard = ({ post }) => {
         </div>
       </div>
       <div className="text-md">
-        {post.workSummary.split("\n").map((line, index) => (
-          <p key={index}>{line}</p>
-        ))}
+        <div
+          dangerouslySetInnerHTML={{ __html: post.workSummary }}
+          className="rsw-ce ul"
+          style={{ paddingLeft: "0px", paddingTop: "0px" }}
+        />
       </div>
     </div>
   );

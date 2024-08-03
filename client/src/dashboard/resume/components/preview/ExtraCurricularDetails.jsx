@@ -3,12 +3,15 @@ import SectionHeader from "./components/SectionHeader";
 
 const ExtraCurriculurDetails = ({ resumeInfo }) => {
   return (
-    <div className="mt-1">
+    <div className="mt-[-5px]">
       <SectionHeader title={"Extra Curricular Activities"} />
-      {resumeInfo.extraCurricular &&
-        resumeInfo.extraCurricular
-          .split("\n")
-          .map((line, index) => <p key={index}>{line}</p>)}
+      <div className="text-md">
+        <div
+          dangerouslySetInnerHTML={{ __html: resumeInfo.extraCurricular }}
+          className="rsw-ce ul"
+          style={{ paddingLeft: "0px", paddingTop: "0px" }}
+        />
+      </div>
     </div>
   );
 };
