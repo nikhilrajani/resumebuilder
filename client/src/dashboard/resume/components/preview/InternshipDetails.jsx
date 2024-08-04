@@ -4,7 +4,7 @@ import InternshipCard from "./components/InternshipCard";
 
 const InternshipDetails = ({ resumeInfo }) => {
   return (
-    <div>
+    <div className="mt-[-5px]">
       <SectionHeader title={"Internships"} />
       <div className="flex flex-col">
         {resumeInfo.internships &&

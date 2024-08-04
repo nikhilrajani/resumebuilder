@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import { GripVertical, Trash } from "lucide-react";
+import { GripVertical, RefreshCcw, Trash } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
 import {
   AlertDialog,
@@ -20,6 +20,7 @@ import RichTextEditor from "./components/RichTechEditor";
 
 const ProjectDetailsForm = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const [initialResumeInfo, setInitialResumeInfo] = useState(resumeInfo);
   const [editProject, setEditProject] = useState(-1);
   const [dragItem, setDragItem] = useState(-1);
   const [dragOverItem, setDragOverItem] = useState(-1);
@@ -120,6 +121,12 @@ const ProjectDetailsForm = ({ enableNext }) => {
     setResumeInfo(updatedResume);
   };
 
+  const handleReset = () => {
+    setEditProject(-1);
+    enableNext(true);
+    setResumeInfo(initialResumeInfo);
+  };
+
   return (
     <div className="p-5 shadow-md rounded-lg border-t-primary border-t-4 mt-10">
       <h2 className="font-bold text-lg">Project Details</h2>
@@ -192,7 +199,7 @@ const ProjectDetailsForm = ({ enableNext }) => {
                           required
                           placeholder="Ex. E-Commerce Website"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing
                               ? resumeInfo.projects[editProject].title
                               : ""
@@ -208,7 +215,7 @@ const ProjectDetailsForm = ({ enableNext }) => {
                           required
                           placeholder="Ex. Term Project"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing
                               ? resumeInfo.projects[editProject].guidance
                               : ""
@@ -224,7 +231,7 @@ const ProjectDetailsForm = ({ enableNext }) => {
                           required
                           placeholder="Ex. May 2024"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing
                               ? resumeInfo.projects[editProject].startDate
                               : ""
@@ -239,7 +246,7 @@ const ProjectDetailsForm = ({ enableNext }) => {
                           name="endDate"
                           placeholder="Ex. Jun. 2024"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing
                               ? resumeInfo.projects[editProject].endDate
                               : ""
@@ -264,15 +271,17 @@ const ProjectDetailsForm = ({ enableNext }) => {
                         </label>
                       </div>
                       <div className="col-span-3 mt-2">
-                        <RichTextEditor
-                          onRichTextEditorChange={onSummaryChange}
-                          index={index}
-                          defaultValue={
-                            isEditing
-                              ? resumeInfo.projects[editProject].projectSummary
-                              : ""
-                          }
-                        />
+                        {isEditing && (
+                          <RichTextEditor
+                            onRichTextEditorChange={onSummaryChange}
+                            index={index}
+                            value={
+                              isEditing
+                                ? resumeInfo.projects[index].projectSummary
+                                : ""
+                            }
+                          />
+                        )}
                       </div>
                     </div>
                   </form>
@@ -292,7 +301,12 @@ const ProjectDetailsForm = ({ enableNext }) => {
         </Button>
       </div>
       <div className="flex justify-end">
-        <Button onClick={onSave}>Save</Button>
+        <div className="flex flex-row gap-2">
+          <Button onClick={handleReset} variant="outline">
+            <RefreshCcw className="text-primary" />
+          </Button>
+          <Button onClick={onSave}>Save</Button>
+        </div>
       </div>
     </div>
   );

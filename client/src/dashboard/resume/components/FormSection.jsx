@@ -11,9 +11,10 @@ import ExtraCurricularDetailsForm from "./forms/ExtraCurriculurDetailsForm";
 import SkillsDetailsForm from "./forms/SkillsDetailsForm";
 import CourseworkDetailsForm from "./forms/CourseworkDetailsForm";
 import PORDetailsForm from "./forms/PORDetailsForm";
+import SequenceDetailsForm from "./forms/SequenceDetailsForm";
 
 const FormSection = () => {
-  const [formIndex, setFormIndex] = useState(4);
+  const [formIndex, setFormIndex] = useState(0);
   const [enableNext, setEnableNext] = useState(true);
   return (
     <div>
@@ -26,13 +27,15 @@ const FormSection = () => {
             <ArrowLeft />
           </Button>
         )}
-        <Button
-          className="flex gap-2"
-          onClick={() => setFormIndex(formIndex + 1)}
-          disabled={!enableNext}
-        >
-          Next <ArrowRight />
-        </Button>
+        {formIndex < 10 && (
+          <Button
+            className="flex gap-2"
+            onClick={() => setFormIndex(formIndex + 1)}
+            disabled={!enableNext}
+          >
+            Next <ArrowRight />
+          </Button>
+        )}
       </div>
       {/* Personal Details Form */}
       {formIndex === 0 && (
@@ -79,9 +82,14 @@ const FormSection = () => {
         <PORDetailsForm enableNext={(v) => setEnableNext(v)} />
       )}
 
-      {/*  Details */}
+      {/* Extra Curricular Details */}
       {formIndex === 9 && (
         <ExtraCurricularDetailsForm enableNext={(v) => setEnableNext(v)} />
+      )}
+
+      {/* Sequence Details */}
+      {formIndex === 10 && (
+        <SequenceDetailsForm enableNext={(v) => setEnableNext(v)} />
       )}
     </div>
   );

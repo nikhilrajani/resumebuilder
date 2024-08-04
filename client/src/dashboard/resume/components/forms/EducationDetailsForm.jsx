@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import { GripVertical, Trash } from "lucide-react";
+import { GripVertical, RefreshCcw, Trash } from "lucide-react";
 import React, { useContext, useState } from "react";
 import {
   AlertDialog,
@@ -18,6 +18,7 @@ import axios from "axios";
 
 const EducationDetailsForm = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const [initialResumeInfo, setInitialResumeInfo] = useState(resumeInfo);
   const [editEducation, setEditEducation] = useState(-1);
   const [dragItem, setDragItem] = useState(-1);
   const [dragOverItem, setDragOverItem] = useState(-1);
@@ -70,6 +71,12 @@ const EducationDetailsForm = ({ enableNext }) => {
     const updatedResume = { ...resumeInfo };
     updatedResume.education = educationListCopy;
     setResumeInfo(updatedResume);
+  };
+
+  const handleReset = () => {
+    setEditEducation(-1);
+    enableNext(true);
+    setResumeInfo(initialResumeInfo);
   };
 
   const addEducation = () => {
@@ -168,7 +175,7 @@ const EducationDetailsForm = ({ enableNext }) => {
                         disabled={index === 0}
                         placeholder="Ex. IIT Kharagpur"
                         onChange={(e) => handleInputChange(index, e)}
-                        defaultValue={
+                        value={
                           isEditing
                             ? resumeInfo.education[editEducation].institute
                             : ""
@@ -184,7 +191,7 @@ const EducationDetailsForm = ({ enableNext }) => {
                         required
                         placeholder="Ex. B.Tech"
                         onChange={(e) => handleInputChange(index, e)}
-                        defaultValue={
+                        value={
                           isEditing
                             ? resumeInfo.education[editEducation].degree
                             : ""
@@ -200,7 +207,7 @@ const EducationDetailsForm = ({ enableNext }) => {
                         required
                         placeholder="Ex. 7.5/10 or 85.2%"
                         onChange={(e) => handleInputChange(index, e)}
-                        defaultValue={
+                        value={
                           isEditing
                             ? resumeInfo.education[editEducation].performance
                             : ""
@@ -216,7 +223,7 @@ const EducationDetailsForm = ({ enableNext }) => {
                         required
                         placeholder="Ex. 2025"
                         onChange={(e) => handleInputChange(index, e)}
-                        defaultValue={
+                        value={
                           isEditing
                             ? resumeInfo.education[editEducation].graduationYear
                             : ""
@@ -230,7 +237,7 @@ const EducationDetailsForm = ({ enableNext }) => {
                         required
                         placeholder="Ex. Electrical Engineering"
                         onChange={(e) => handleInputChange(index, e)}
-                        defaultValue={
+                        value={
                           isEditing
                             ? resumeInfo.education[editEducation].major
                             : ""
@@ -255,7 +262,12 @@ const EducationDetailsForm = ({ enableNext }) => {
         </Button>
       </div>
       <div className="flex justify-end">
-        <Button onClick={onSave}>Save</Button>
+        <div className="flex flex-row gap-2">
+          <Button onClick={handleReset} variant="outline">
+            <RefreshCcw className="text-primary" />
+          </Button>
+          <Button onClick={onSave}>Save</Button>
+        </div>
       </div>
     </div>
   );

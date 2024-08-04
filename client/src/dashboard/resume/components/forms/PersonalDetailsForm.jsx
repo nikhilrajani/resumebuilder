@@ -2,10 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
 import axios from "axios";
-import React, { useContext } from "react";
+import { RefreshCcw } from "lucide-react";
+import React, { useContext, useState } from "react";
 
 const PersonalDetailsForm = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const [initialResumeInfo, setInitialResumeInfo] = useState(resumeInfo);
 
   const handleInputChange = (e) => {
     enableNext(false);
@@ -44,6 +46,11 @@ const PersonalDetailsForm = ({ enableNext }) => {
     }
   };
 
+  const handleReset = () => {
+    enableNext(true);
+    setResumeInfo(initialResumeInfo);
+  };
+
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
       <h2 className="font-bold text-lg">Personal Details</h2>
@@ -56,7 +63,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
               name="firstName"
               required
               onChange={handleInputChange}
-              defaultValue={resumeInfo.firstName}
+              value={resumeInfo.firstName}
             />
           </div>
           <div>
@@ -64,7 +71,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
             <Input
               name="middleName"
               onChange={handleInputChange}
-              defaultValue={resumeInfo.middleName}
+              value={resumeInfo.middleName}
             />
           </div>
           <div>
@@ -73,7 +80,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
               name="lastName"
               required
               onChange={handleInputChange}
-              defaultValue={resumeInfo.lastName}
+              value={resumeInfo.lastName}
             />
           </div>
           <div>
@@ -81,7 +88,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
             <Input
               name="phone"
               onChange={handleInputChange}
-              defaultValue={resumeInfo.phone}
+              value={resumeInfo.phone}
             />
           </div>
           <div>
@@ -89,7 +96,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
             <Input
               name="linkedin"
               onChange={handleInputChange}
-              defaultValue={resumeInfo.linkedin}
+              value={resumeInfo.linkedin}
             />
           </div>
           <div>
@@ -97,7 +104,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
             <Input
               name="github"
               onChange={handleInputChange}
-              defaultValue={resumeInfo.github}
+              value={resumeInfo.github}
             />
           </div>
         </div>
@@ -111,7 +118,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
               placeholder="Ex. B.Tech"
               required
               onChange={handleInputChange}
-              defaultValue={resumeInfo.education[0].degree}
+              value={resumeInfo.education[0].degree}
             />
           </div>
           <div>
@@ -121,7 +128,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
               placeholder="20XX100XX"
               required
               onChange={handleInputChange}
-              defaultValue={resumeInfo.rollNo}
+              value={resumeInfo.rollNo}
             />
           </div>
           <div>
@@ -131,7 +138,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
               placeholder="Ex. 8.5/10"
               required
               onChange={handleInputChange}
-              defaultValue={resumeInfo.education[0].performance}
+              value={resumeInfo.education[0].performance}
             />
           </div>
           <div>
@@ -141,7 +148,7 @@ const PersonalDetailsForm = ({ enableNext }) => {
               placeholder="Ex. 2025"
               required
               onChange={handleInputChange}
-              defaultValue={resumeInfo.education[0].graduationYear}
+              value={resumeInfo.education[0].graduationYear}
             />
           </div>
           <div className="col-span-2">
@@ -151,12 +158,17 @@ const PersonalDetailsForm = ({ enableNext }) => {
               placeholder="Ex. Electrical Engineering"
               required
               onChange={handleInputChange}
-              defaultValue={resumeInfo.education[0].major}
+              value={resumeInfo.education[0].major}
             />
           </div>
         </div>
         <div className="flex justify-end">
-          <Button type="Submit">Save</Button>
+          <div className="flex flex-row gap-2">
+            <Button onClick={handleReset} variant="outline">
+              <RefreshCcw className="text-primary" />
+            </Button>
+            <Button type="Submit">Save</Button>
+          </div>
         </div>
       </form>
     </div>

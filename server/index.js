@@ -31,11 +31,24 @@ app.post("/api/addResume", async (req, res) => {
   };
   const education = [];
   education.push(firstEducation);
+
+  const sequence = [
+    "Internships",
+    "Projects",
+    "Competitions",
+    "Awards",
+    "Skills",
+    "Coursework",
+    "POR",
+    "Extra Curricular",
+  ];
+
   await Resume.create({
     resumeId,
     title,
     email,
     education,
+    sequence,
   });
 
   res.json({ message: "Resume Added!" });

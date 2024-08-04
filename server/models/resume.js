@@ -189,6 +189,12 @@ const resumeSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  sequence: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
 });
 
 const Resume = mongoose.models.Resume || mongoose.model("Resume", resumeSchema);

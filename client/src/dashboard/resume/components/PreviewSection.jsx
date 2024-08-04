@@ -14,28 +14,46 @@ import ExtraCurricularDetails from "./preview/ExtraCurricularDetails";
 const PreviewSection = () => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
+  const sections = {
+    Internships: <InternshipDetails resumeInfo={resumeInfo} />,
+    Projects: <ProjectDetails resumeInfo={resumeInfo} />,
+    Competitions: <CompetitionDetails resumeInfo={resumeInfo} />,
+    Awards: <AwardsDetails resumeInfo={resumeInfo} />,
+    Skills: <SkillsDetails resumeInfo={resumeInfo} />,
+    Coursework: <CourseworkDetails resumeInfo={resumeInfo} />,
+    POR: <PORDetails resumeInfo={resumeInfo} />,
+    "Extra Curricular": <ExtraCurricularDetails resumeInfo={resumeInfo} />,
+  };
+
   return (
     <div>
       {/* Personal Details */}
       <PersonalDetails resumeInfo={resumeInfo} />
       {/* Education */}
       <EducationDetails resumeInfo={resumeInfo} />
+
+      {/* sections */}
+      {resumeInfo.sequence.map((item, index) => {
+        const renderSection = sections[item];
+        return <div key={index}>{renderSection}</div>;
+      })}
+
       {/* Internships */}
-      <InternshipDetails resumeInfo={resumeInfo} />
+      {/* <InternshipDetails resumeInfo={resumeInfo} /> */}
       {/* Projects */}
-      <ProjectDetails resumeInfo={resumeInfo} />
+      {/* <ProjectDetails resumeInfo={resumeInfo} /> */}
       {/* Competition/Conference */}
-      <CompetitionDetails resumeInfo={resumeInfo} />
+      {/* <CompetitionDetails resumeInfo={resumeInfo} /> */}
       {/* Awards and Achievements */}
-      <AwardsDetails resumeInfo={resumeInfo} />
+      {/* <AwardsDetails resumeInfo={resumeInfo} /> */}
       {/* Skills and Expertise */}
-      <SkillsDetails resumeInfo={resumeInfo} />
+      {/* <SkillsDetails resumeInfo={resumeInfo} /> */}
       {/* Coursework */}
-      <CourseworkDetails resumeInfo={resumeInfo} />
+      {/* <CourseworkDetails resumeInfo={resumeInfo} /> */}
       {/* POR */}
-      <PORDetails resumeInfo={resumeInfo} />
+      {/* <PORDetails resumeInfo={resumeInfo} /> */}
       {/* Extra Curricular */}
-      <ExtraCurricularDetails resumeInfo={resumeInfo} />
+      {/* <ExtraCurricularDetails resumeInfo={resumeInfo} /> */}
     </div>
   );
 };

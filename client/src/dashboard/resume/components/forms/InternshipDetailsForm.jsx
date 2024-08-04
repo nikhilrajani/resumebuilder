@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import { GripVertical, Trash } from "lucide-react";
+import { GripVertical, RefreshCcw, Trash } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
 import {
   AlertDialog,
@@ -20,6 +20,7 @@ import RichTextEditor from "./components/RichTechEditor";
 
 const InternshipDetailsForm = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const [initialResumeInfo, setInitialResumeInfo] = useState(resumeInfo);
   const [editInternship, setEditInternship] = useState(-1);
   const [dragItem, setDragItem] = useState(-1);
   const [dragOverItem, setDragOverItem] = useState(-1);
@@ -60,6 +61,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
     if (response.data) {
       console.log(response.data);
     }
+    setInitialResumeInfo(resumeInfo);
   };
 
   const handleInputChange = (index, e) => {
@@ -121,6 +123,12 @@ const InternshipDetailsForm = ({ enableNext }) => {
     const updatedResume = { ...resumeInfo };
     updatedResume.internships = internshipsListCopy;
     setResumeInfo(updatedResume);
+  };
+
+  const handleReset = () => {
+    setEditInternship(-1);
+    enableNext(true);
+    setResumeInfo(initialResumeInfo);
   };
 
   return (
@@ -192,7 +200,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           required
                           placeholder="Ex. Software Developer"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing
                               ? resumeInfo.internships[editInternship].role
                               : ""
@@ -208,7 +216,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           required
                           placeholder="Ex. Google"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing
                               ? resumeInfo.internships[editInternship]
                                   .companyName
@@ -224,7 +232,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           name="workplace"
                           placeholder="Ex. Bangalore or Remote"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing
                               ? resumeInfo.internships[editInternship].workplace
                               : ""
@@ -240,7 +248,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           required
                           placeholder="Ex. May 2024"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing
                               ? resumeInfo.internships[editInternship].startDate
                               : ""
@@ -255,7 +263,7 @@ const InternshipDetailsForm = ({ enableNext }) => {
                           name="endDate"
                           placeholder="Ex. Jun. 2024"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing
                               ? resumeInfo.internships[editInternship].endDate
                               : ""
@@ -280,16 +288,13 @@ const InternshipDetailsForm = ({ enableNext }) => {
                         </label>
                       </div>
                       <div className="col-span-3 mt-2">
-                        <RichTextEditor
-                          onRichTextEditorChange={onSummaryChange}
-                          index={index}
-                          defaultValue={
-                            isEditing
-                              ? resumeInfo.internships[editInternship]
-                                  .workSummary
-                              : ""
-                          }
-                        />
+                        {isEditing && (
+                          <RichTextEditor
+                            onRichTextEditorChange={onSummaryChange}
+                            index={index}
+                            value={isEditing ? internship.workSummary : ""}
+                          />
+                        )}
                       </div>
                     </div>
                   </form>
@@ -309,7 +314,12 @@ const InternshipDetailsForm = ({ enableNext }) => {
         </Button>
       </div>
       <div className="flex justify-end">
-        <Button onClick={onSave}>Save</Button>
+        <div className="flex flex-row gap-2">
+          <Button onClick={handleReset} variant="outline">
+            <RefreshCcw className="text-primary" />
+          </Button>
+          <Button onClick={onSave}>Save</Button>
+        </div>
       </div>
     </div>
   );
