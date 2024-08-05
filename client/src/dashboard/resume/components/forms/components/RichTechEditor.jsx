@@ -13,12 +13,12 @@ import {
   Toolbar,
 } from "react-simple-wysiwyg";
 
-function RichTextEditor({ onRichTextEditorChange, index, value }) {
+function RichTextEditor({ onRichTextEditorChange, index, defaultValue }) {
   return (
     <div>
       <EditorProvider>
         <Editor
-          value={value}
+          value={defaultValue}
           onChange={(e) => {
             onRichTextEditorChange(index, e.target.value);
           }}

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import { GripVertical, Trash } from "lucide-react";
+import { GripVertical, RefreshCcw, Trash } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
 import {
   AlertDialog,
@@ -119,6 +119,23 @@ const PORDetailsForm = ({ enableNext }) => {
     setResumeInfo(updatedResume);
   };
 
+  const handleReset = async () => {
+    setEditPOR(-1);
+    enableNext(true);
+    const id = resumeInfo.resumeId;
+    const backendUri = import.meta.env.VITE_BACKEND_URL;
+    try {
+      const response = await axios.get(
+        `${backendUri}/api/getResume?resumeId=${id}`
+      );
+      if (response.data) {
+        setResumeInfo(response.data.resume);
+      }
+    } catch (error) {
+      console.error(error); // Handle errors appropriately
+    }
+  };
+
   return (
     <div className="p-5 shadow-md rounded-lg border-t-primary border-t-4 mt-10">
       <h2 className="font-bold text-lg">Positions of Responsibility</h2>
@@ -186,7 +203,7 @@ const PORDetailsForm = ({ enableNext }) => {
                           required
                           placeholder="Ex. General Secretary"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing ? resumeInfo.por[editPOR].position : ""
                           }
                         />
@@ -200,7 +217,7 @@ const PORDetailsForm = ({ enableNext }) => {
                           required
                           placeholder="Ex. May 2024"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing ? resumeInfo.por[editPOR].startDate : ""
                           }
                         />
@@ -213,7 +230,7 @@ const PORDetailsForm = ({ enableNext }) => {
                           name="endDate"
                           placeholder="Ex. Jun. 2024"
                           onChange={(e) => handleInputChange(index, e)}
-                          defaultValue={
+                          value={
                             isEditing ? resumeInfo.por[editPOR].endDate : ""
                           }
                         />
@@ -261,7 +278,12 @@ const PORDetailsForm = ({ enableNext }) => {
         </Button>
       </div>
       <div className="flex justify-end">
-        <Button onClick={onSave}>Save</Button>
+        <div className="flex flex-row gap-2">
+          <Button onClick={handleReset} variant="outline">
+            <RefreshCcw className="text-primary" />
+          </Button>
+          <Button onClick={onSave}>Save</Button>
+        </div>
       </div>
     </div>
   );

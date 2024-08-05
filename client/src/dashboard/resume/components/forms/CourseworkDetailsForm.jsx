@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import RichTextEditor from "./components/RichTechEditor";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { RefreshCcw } from "lucide-react";
 
 const CourseworkDetailsForm = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
@@ -26,19 +27,41 @@ const CourseworkDetailsForm = ({ enableNext }) => {
     updatedResume.coursework = value;
     setResumeInfo(updatedResume);
   };
+
+  const handleReset = async () => {
+    enableNext(true);
+    const id = resumeInfo.resumeId;
+    const backendUri = import.meta.env.VITE_BACKEND_URL;
+    try {
+      const response = await axios.get(
+        `${backendUri}/api/getResume?resumeId=${id}`
+      );
+      if (response.data) {
+        setResumeInfo(response.data.resume);
+      }
+    } catch (error) {
+      console.error(error); // Handle errors appropriately
+    }
+  };
+
   return (
     <div className="p-5 shadow-md rounded-lg border-t-primary border-t-4 mt-10">
       <h2 className="font-bold text-lg">Coursework Details</h2>
       <p>Let us know about your courses</p>
-      <div className="col-span-3 mt-2">
+      <div className="col-span-3 my-2">
         <RichTextEditor
           onRichTextEditorChange={onSummaryChange}
           index={0}
           defaultValue={resumeInfo.coursework}
         />
       </div>
-      <div className="flex justify-end mt-3">
-        <Button onClick={onSave}>Save</Button>
+      <div className="flex justify-end">
+        <div className="flex flex-row gap-2">
+          <Button onClick={handleReset} variant="outline">
+            <RefreshCcw className="text-primary" />
+          </Button>
+          <Button onClick={onSave}>Save</Button>
+        </div>
       </div>
     </div>
   );

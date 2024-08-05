@@ -20,7 +20,6 @@ import RichTextEditor from "./components/RichTechEditor";
 
 const InternshipDetailsForm = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  const [initialResumeInfo, setInitialResumeInfo] = useState(resumeInfo);
   const [editInternship, setEditInternship] = useState(-1);
   const [dragItem, setDragItem] = useState(-1);
   const [dragOverItem, setDragOverItem] = useState(-1);
@@ -61,7 +60,6 @@ const InternshipDetailsForm = ({ enableNext }) => {
     if (response.data) {
       console.log(response.data);
     }
-    setInitialResumeInfo(resumeInfo);
   };
 
   const handleInputChange = (index, e) => {
@@ -124,11 +122,21 @@ const InternshipDetailsForm = ({ enableNext }) => {
     updatedResume.internships = internshipsListCopy;
     setResumeInfo(updatedResume);
   };
-
-  const handleReset = () => {
+  const handleReset = async () => {
     setEditInternship(-1);
     enableNext(true);
-    setResumeInfo(initialResumeInfo);
+    const id = resumeInfo.resumeId;
+    const backendUri = import.meta.env.VITE_BACKEND_URL;
+    try {
+      const response = await axios.get(
+        `${backendUri}/api/getResume?resumeId=${id}`
+      );
+      if (response.data) {
+        setResumeInfo(response.data.resume);
+      }
+    } catch (error) {
+      console.error(error); // Handle errors appropriately
+    }
   };
 
   return (
@@ -288,12 +296,14 @@ const InternshipDetailsForm = ({ enableNext }) => {
                         </label>
                       </div>
                       <div className="col-span-3 mt-2">
-                        {isEditing && (
+                        {isEditing ? (
                           <RichTextEditor
                             onRichTextEditorChange={onSummaryChange}
                             index={index}
-                            value={isEditing ? internship.workSummary : ""}
+                            defaultValue={internship.workSummary}
                           />
+                        ) : (
+                          <div>Not Editing</div>
                         )}
                       </div>
                     </div>

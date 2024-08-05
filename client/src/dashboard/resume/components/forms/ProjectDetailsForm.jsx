@@ -20,7 +20,6 @@ import RichTextEditor from "./components/RichTechEditor";
 
 const ProjectDetailsForm = ({ enableNext }) => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  const [initialResumeInfo, setInitialResumeInfo] = useState(resumeInfo);
   const [editProject, setEditProject] = useState(-1);
   const [dragItem, setDragItem] = useState(-1);
   const [dragOverItem, setDragOverItem] = useState(-1);
@@ -121,10 +120,21 @@ const ProjectDetailsForm = ({ enableNext }) => {
     setResumeInfo(updatedResume);
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     setEditProject(-1);
     enableNext(true);
-    setResumeInfo(initialResumeInfo);
+    const id = resumeInfo.resumeId;
+    const backendUri = import.meta.env.VITE_BACKEND_URL;
+    try {
+      const response = await axios.get(
+        `${backendUri}/api/getResume?resumeId=${id}`
+      );
+      if (response.data) {
+        setResumeInfo(response.data.resume);
+      }
+    } catch (error) {
+      console.error(error); // Handle errors appropriately
+    }
   };
 
   return (
@@ -275,10 +285,8 @@ const ProjectDetailsForm = ({ enableNext }) => {
                           <RichTextEditor
                             onRichTextEditorChange={onSummaryChange}
                             index={index}
-                            value={
-                              isEditing
-                                ? resumeInfo.projects[index].projectSummary
-                                : ""
+                            defaultValue={
+                              isEditing ? project.projectSummary : ""
                             }
                           />
                         )}
