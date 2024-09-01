@@ -2,7 +2,7 @@ import React from "react";
 
 const PORCard = ({ post }) => {
   return (
-    <div>
+    <div className="w-fit">
       <div className="flex justify-between font-bold text-md">
         <div>{post.position}</div>
         <div>

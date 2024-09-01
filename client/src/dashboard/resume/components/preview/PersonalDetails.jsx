@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const PersonalDetails = ({ resumeInfo }) => {
   return (
@@ -11,9 +12,14 @@ const PersonalDetails = ({ resumeInfo }) => {
         {resumeInfo?.education[0].major}
       </h2>
       <p className="text-center text-md">
-        {resumeInfo?.phone} | {resumeInfo?.email} | {resumeInfo?.linkedin}
+        {resumeInfo?.phone} | {resumeInfo?.email} |{" "}
+        <Link to={resumeInfo?.linkedin} target="_blank" className="underline">
+          LinkedIn
+        </Link>
         {" | "}
-        {resumeInfo?.github}
+        <Link to={resumeInfo?.github} target="_blank" className="underline">
+          Github
+        </Link>
       </p>
     </div>
   );

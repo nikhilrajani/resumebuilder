@@ -16,7 +16,9 @@ function App() {
 
   return (
     <>
-      <Header />
+      <div id="no-print">
+        <Header />
+      </div>
       <Outlet />
     </>
   );

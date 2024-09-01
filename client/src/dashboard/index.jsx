@@ -38,6 +38,7 @@ const Dashboard = () => {
           <ResumeCard key={resume.resumeId} resume={resume} />
         ))}
       </div>
+      <div></div>
     </div>
   );
 };

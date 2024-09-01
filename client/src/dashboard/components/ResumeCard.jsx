@@ -8,8 +8,10 @@ const ResumeCard = ({ resume }) => {
       to={"/dashboard/resume/" + resume.resumeId + "/edit"}
       className="mt-10"
     >
-      <div className="p-14 bg-secondary flex items-center justify-center h-[280px] border border-primary rounded-lg hover:scale-105 transition-all hover:shadow-md shadow-primary">
-        <Notebook />
+      <div className="">
+        <div className="bg-gradient-to-b from-primary via-purple-400 to-red-400 p-14 flex items-center justify-center h-[280px] border border-primary rounded-lg hover:scale-105 transition-all hover:shadow-md shadow-primary">
+          <Notebook />
+        </div>
       </div>
       <h2 className="text-center my-1">{resume.title}</h2>
     </Link>

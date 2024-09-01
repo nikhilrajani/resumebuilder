@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+@media print {
+  #no-print {
+    display: none;
+  }
+
+  #print-area {
+    display: block;
+  }
+
+  .section-header {
+    background-color: #e0e8f0 !important; /* Ensure the background color is applied when printing */
+    -webkit-print-color-adjust: exact; /* For WebKit browsers like Chrome and Safari */
+    print-color-adjust: exact; /* For other browsers */
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
+@page {
+  size: auto;
+  margin: 0mm;
+}
+
 .rsw-ce ul {
   list-style: disc;
   padding-left: 1em;

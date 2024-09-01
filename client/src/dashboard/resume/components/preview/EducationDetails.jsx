@@ -3,7 +3,7 @@ import SectionHeader from "./components/SectionHeader";
 
 const EducationDetails = ({ resumeInfo }) => {
   return (
-    <div className="mt-1">
+    <div className="mt-1 w-auto">
       <SectionHeader title={"Education"} />
       <table className="w-full">
         <thead className="font-bold">

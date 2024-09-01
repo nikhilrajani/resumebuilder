@@ -2,7 +2,7 @@ import React from "react";
 
 const InternshipCard = ({ internship }) => {
   return (
-    <div className="w-full">
+    <div className="w-fit">
       <div className="flex justify-between font-bold text-md">
         <div>
           {internship.role} | {internship.companyName} | {internship.workplace}

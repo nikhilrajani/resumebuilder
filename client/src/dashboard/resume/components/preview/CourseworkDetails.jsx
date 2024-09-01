@@ -3,7 +3,7 @@ import SectionHeader from "./components/SectionHeader";
 
 const CourseworkDetails = ({ resumeInfo }) => {
   return (
-    <div className="mt-[-5px]">
+    <div className="mt-[-5px] w-auto">
       <SectionHeader title={"Coursework Information"} />
       <div className="text-md">
         <div

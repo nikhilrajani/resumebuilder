@@ -2,7 +2,7 @@ import React from "react";
 
 const ProjectCard = ({ project }) => {
   return (
-    <div className="w-full">
+    <div className="w-fit">
       <div className="flex justify-between font-bold text-md">
         <div>
           {project.title} | {project.guidance}
