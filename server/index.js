@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 connectToMongoDB();
-const port = process.env.port;
+const port = process.env.PORT;
 
 app.get("/api", (req, res) => {
   res.json({ message: "Data Recieved Successfully!" });
